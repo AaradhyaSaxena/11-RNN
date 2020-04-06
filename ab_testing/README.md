@@ -9,6 +9,8 @@ Notebook progression:</br>
 3. Optimizing performance by Designing A/B Tests.
 4. Make data driven decisions by analyzing A/B Test Results
 
-
+<p align="center">
+  <img src="data/ab_testing.png" width=500>
+</p>
 
 Conducting an AB-test to determine which paywall has a higher conversion rate.
