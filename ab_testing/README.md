@@ -8,3 +8,5 @@ Notebook progression:</br>
 2. Identifying trends by the help of Exploratory Data Analysis.
 3. Optimizing performance by Designing A/B Tests.
 4. Make data driven decisions by analyzing A/B Test Results
+
+Conducting an AB-test to determine which paywall has a higher conversion rate.
