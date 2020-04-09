@@ -6,6 +6,6 @@
      - Dataset from project Gutenberg
 
 2. Notebook_2: 
-     - Collaborative filtering
+     - Collaborative filtering based Recommendation system
      - Movielens dataset
      
