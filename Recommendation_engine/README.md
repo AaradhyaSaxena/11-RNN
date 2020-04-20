@@ -6,6 +6,9 @@
      - Dataset from project Gutenberg
 
 2. Notebook_2: 
-     - Collaborative filtering based Recommendation system
+     - Collaborative filtering based Recommendation System
      - Movielens dataset
-     
+    
+3. Notebook_3:
+     - Non-Personalized Content based Recommnedation System.
+     - Flipkart dataset
