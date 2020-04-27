@@ -1,7 +1,19 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+sns.set(style="white")
+
+import requests
+from bs4 import BeautifulSoup
+from newspaper import Article
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+
 def clean_cols(data):
     """Clean the column names by stripping and lowercase."""
     clean_col_map = {x: x.lower().strip() for x in list(data)}
-    return data.rename(index=str, columns=clean_col_map)
+    return data.rename(columns=clean_col_map)
 
 def TrainTestSplit(X, Y, R=0, test_size=0.2):
     """Easy Train Test Split call."""
@@ -24,17 +36,20 @@ def rate_nonstop(words):
     no_order = list(set(filtered_sentence))
     rate_unique_nonstop=len(no_order)/len(words)
     return rate_nonstop,rate_unique_nonstop
+
 def avg_token(words):
     words=tokenize(words)
     length=[]
     for i in words:
         length.append(len(i))
-    return np.average(length)
+    ans = sum(length)/len(length)
+    return ans
 
 from textblob import TextBlob
 import datefinder
 import datetime  
-from datetime import date 
+from datetime import date
+
 def day(article_text):
     article=article_text
     if len(list(datefinder.find_dates(article)))>0:
@@ -52,6 +67,7 @@ def tokenize(text):
 
 pos_words=[]
 neg_words=[]
+
 def polar(words):
     all_tokens=tokenize(words)
     for i in all_tokens:
@@ -86,8 +102,11 @@ def rates(words):
     max_negative_polarity=max(pol_neg)
     avg_positive_polarity=np.average(pol_pos)
     avg_negative_polarity=np.average(pol_neg)
-    return global_rate_positive_words,global_rate_negative_words,avg_positive_polarity,min_positive_polarity,
-            max_positive_polarity,avg_negative_polarity,min_negative_polarity,max_negative_polarity
+    return global_rate_positive_words, global_rate_negative_words, avg_positive_polarity, min_positive_polarity, max_positive_polarity, avg_negative_polarity, min_negative_polarity, max_negative_polarity
+
+
+
+
 
 
 
