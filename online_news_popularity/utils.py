@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 sns.set(style="white")
+from time import time
+from sklearn.metrics import jaccard_score, accuracy_score, fbeta_score, roc_curve, auc, roc_auc_score
 
 import requests
 from bs4 import BeautifulSoup
@@ -105,6 +107,49 @@ def rates(words):
     return global_rate_positive_words, global_rate_negative_words, avg_positive_polarity, min_positive_polarity, max_positive_polarity, avg_negative_polarity, min_negative_polarity, max_negative_polarity
 
 
+def train_predict(learner, sample_size, X_train, y_train, X_test, y_test): 
+    '''
+    inputs:
+       - learner: the learning algorithm to be trained and predicted on
+       - sample_size: the size of samples (number) to be drawn from training set
+       - X_train: features training set
+       - y_train: income training set
+       - X_test: features testing set
+       - y_test: income testing set
+    '''
+    results = {}
+    
+    start = time() # Get start time
+    learner.fit(X_train[:sample_size], y_train[:sample_size])
+    end = time() # Get end time
+
+    results['train_time'] = end-start
+        
+    # Get predictions on the first 4000 training samples
+    start = time() # Get start time
+    predictions_test = learner.predict(X_test)
+    predictions_train = learner.predict(X_train[:4000])
+    end = time() # Get end time
+    
+    # Calculate the total prediction time
+    results['pred_time'] = end-start
+    # Compute accuracy on the first 4000 training samples
+    results['acc_train'] = jaccard_score(y_train[:4000],predictions_train, average='weighted')
+    # Compute accuracy on test set
+    results['acc_test'] = jaccard_score(y_test,predictions_test, average='weighted')
+    # Compute F-score on the the first 4000 training samples
+#     results['f_train'] = fbeta_score(y_train[:4000],predictions_train,beta=1)
+#     # Compute F-score on the test set
+#     results['f_test'] = fbeta_score(y_test,predictions_test,beta=1)
+#     # Compute AUC on the the first 4000 training samples
+#     results['auc_train'] = roc_auc_score(y_train[:4000],predictions_train)
+#     # Compute AUC on the test set
+#     results['auc_test'] = roc_auc_score(y_test,predictions_test)
+    # Success
+    print("{} trained on {} samples.".format(learner.__class__.__name__, sample_size))
+#     print( "{} with accuracy {}, F1 {} and AUC {}.".format(learner.__class__.__name__,results['acc_test'],results['f_test'], results['auc_test']))   
+    
+    return results
 
 
 
